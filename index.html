@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votação dos DJs</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        button { padding: 10px 20px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Vote no próximo DJ!</h1>
+    <div id="djs">
+        <button onclick="vote('DJ 1')">DJ 1</button>
+        <button onclick="vote('DJ 2')">DJ 2</button>
+        <button onclick="vote('DJ 3')">DJ 3</button>
+        <button onclick="vote('DJ 4')">DJ 4</button>
+    </div>
+
+    <p id="message"></p>
+
+    <script>
+        function vote(dj) {
+            fetch(`https://api.sheety.co/YOUR_API_KEY/djVote/sheet1`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ dj: dj })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('message').innerText = `Você votou no ${dj}!`;
+            })
+            .catch(error => console.error('Erro:', error));
+        }
+    </script>
+</body>
+</html>
